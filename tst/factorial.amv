@@ -1,0 +1,35 @@
+MULTIPLICATION: BEGINMACRO
+COPY R6 R4 ; Compara contador e resultado
+SUB R6 R2 ; Limite de j = R2
+JZ CONTINUE ; Finaliza loop
+SUM R8
+JMP MULT
+ENDMACRO
+READ R0 ; Número
+LOAD R2 ZERO ; Se o número for 0
+LOAD R7 ONE ; Imprime 1
+COPY R3 R0
+SUB R3 R2
+JZ PRINT
+LOAD R2 ONE ; Contador i
+COPY R3 R2 ; Incremento
+ADD R0 R3
+COPY R8 R3 ; Aux para teste
+FACT: COPY R5 R2 ; Compara contador e número
+SUB R5 R0
+JZ PRINT ; Finaliza loop
+LOAD R4 ZERO ; Contador j
+LOAD R7 ZERO ; Resultado
+MULT: MULTIPLICATION
+CONTINUE: ADD R2 R3 ; Incrementa contador
+COPY R8 R7
+JMP FACT
+PRINT: WRITE R7
+HALT
+ZERO: WORD 0
+ONE: WORD 1
+END
+SUM: BEGINMACRO REG
+ADD R7 REG ; Multiplicação usando soma
+ADD R4 R3 ; Incrementa contador
+ENDMACRO

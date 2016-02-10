@@ -1,0 +1,45 @@
+CHECKZERO: BEGINMACRO 
+LOAD R2 ONE ; R2 = 1 Incrementar contador
+LOAD R3 ZERO ; R3 = 0 Contador i
+LOAD R8 ZERO ; R8 = 0 Contador j
+COPY R4 R0
+COPY R5 R1 ; Verifica se divisor é 0
+SUB R5 R3
+JZ PRINT
+COPY R5 R0 ; Verifica se dividendo é 0
+COPY R4 R1
+SUB R5 R3
+JZ PRINT
+ENDMACRO
+READ R0 ; Número 1
+READ R1 ; Número 2
+COPY R2 R0
+COPY R4 R1
+SUB R2 R4
+JN NEGATIVE
+JZ EQUAL
+JMP CONTINUE
+NEGATIVE: COPY R6 R0 ; Se R0<R1
+COPY R0 R1 ; Troca R0 e R1
+COPY R1 R6
+JMP CONTINUE
+EQUAL: JMP PRINT
+CONTINUE: CHECKZERO
+COPY R4 R1
+ADD R4 R2
+DIVIDE: SUB R4 R2 ; Decrementa 1 do divisor
+COPY R6 R0
+COPY R7 R1
+LOOP1: SUB R6 R4 ; Dividendo - Divisor
+JN DIVIDE ; Se negativo volta
+JZ LOOP2 ; Se 0 testa o segundo número
+JMP LOOP1 ; Ainda positivo
+LOOP2: SUB R7 R4 ; Dividendo - Divisor
+JN DIVIDE ; Se negativo volta
+JZ PRINT ; Se 0 testa o segundo número
+JMP LOOP2 ; Ainda positivo
+PRINT: WRITE R4
+HALT
+ZERO: WORD 0
+ONE: WORD 1
+TEMP: WORD 0

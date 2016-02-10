@@ -1,0 +1,41 @@
+CHECK1: BEGINMACRO REG
+COPY R3 R1 ; Se parâmetro for 1, imprime 0
+SUB R3 REG
+LOAD R7 ZERO
+JZ PRINT
+ENDMACRO
+CHECK2: BEGINMACRO REG
+COPY R3 REG ; Se parâmetro for 2, imprime 1
+ADD R3 REG
+SUB R3 R0
+LOAD R7 ONE
+JZ PRINT
+ENDMACRO
+READ R0 ; Parâmetro Fibonacci
+LOAD R1 ONE ; R1 = 1 Incrementar contador
+LOAD R2 ZERO ; R2 = 0 Contador
+COPY R8 R2 ; Constante 0
+CHECK1 R0
+CHECK2 R1
+ADD R2 R1 ; Incrementa contador para 2
+ADD R2 R1
+LOAD R4 ZERO ; Primeiro número da série
+LOAD R5 ONE ; Segundo número da série
+LOAD R7 ZERO ; Variável auxiliar next
+ITERATE
+ITERATE: BEGINMACRO
+LOOP: COPY R6 R2 ; Compara contador e parâmetro
+SUB R6 R0
+JZ PRINT ; Imprime resultado cont = param
+COPY R7 R8 ; next = 0
+ADD R7 R4 ; next = first + second
+ADD R7 R5
+COPY R4 R5 ; first = second
+COPY R5 R7 ; second = next
+ADD R2 R1 ; Incrementa contador
+JMP LOOP
+ENDMACRO
+PRINT: WRITE R7 ; Imprime resultado
+HALT
+ZERO: WORD 0
+ONE: WORD 1
